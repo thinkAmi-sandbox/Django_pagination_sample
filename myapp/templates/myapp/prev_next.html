@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>My Site</title>
+</head>
+<body>
+
+    <div id="main">
+        <h1>Prev-Next Paginator Page</h1>
+        <table>
+            <tr>
+                <th>title</th>
+                <th>content</th>
+            </tr>
+            {% for article in object_list %}
+                <tr>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.content }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="step-link">
+                {% if page_obj.has_previous %}
+                    <a href="{% url 'my:prev_next' %}?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{% url 'my:prev_next' %}?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+</body>
+</html>
