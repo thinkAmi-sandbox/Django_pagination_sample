@@ -23,3 +23,15 @@ class PurePaginatorView(PaginationMixin, ListView):
     model = models.Article
     template_name = 'myapp/pure.html'
     paginate_by = 1
+    
+    
+class BootstrapPurePaginatorView(PaginationMixin, ListView):
+    model = models.Article
+    template_name = 'myapp/bootstrap_pure.html'
+    paginate_by = 1
+    
+    
+class SharedPaginatorView(PaginationMixin, ListView):
+    model = models.Article
+    template_name = 'myapp/share_base.html'
+    paginate_by = 1

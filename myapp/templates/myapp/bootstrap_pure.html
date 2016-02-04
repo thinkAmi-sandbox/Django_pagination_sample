@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>My Site</title>
+    {% load staticfiles %}
+    <link href={% static 'myapp/css/pagination.css' %} rel='stylesheet'>
+    
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div id="main">
+        <h1>django-pure-pagination & Bootstrap Page</h1>
+        <table>
+            <tr>
+                <th>title</th>
+                <th>content</th>
+            </tr>
+            {% for article in object_list %}
+                <tr>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.content }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    
+    {% if is_paginated %}
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li><a href="{% url 'my:bootstrap_pure' %}?{{ page_obj.previous_page_number.querystring }}">previous</a></li>
+            {% endif %}
+            {% for link_page in page_obj.pages %}
+                {% if link_page %}
+                    {% if link_page == page_obj.number %}
+                        <li class="active"><a href="">{{ link_page }}</a></li>
+                    {% else %}
+                        <li><a href="{% url 'my:bootstrap_pure' %}?{{ link_page.querystring  }}">{{ link_page }}</a></li>
+                    {% endif %}
+                {% else %}
+                    {# 省略された部分の表示内容 #}
+                    <li class="disabled"><a href="#">(省略)</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li><a href="{% url 'my:bootstrap_pure' %}?{{ page_obj.next_page_number.querystring }}">next</a></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+</body>
+</html>
